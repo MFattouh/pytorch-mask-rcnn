@@ -102,7 +102,8 @@ class CocoDataset(utils.Dataset):
         return_coco: If True, returns the COCO object.
         auto_download: Automatically download and unzip MS-COCO images and annotations
         """
-
+        self._class_map = class_map
+        self._active_classes = class_ids
         if auto_download is True:
             self.auto_download(dataset_dir, subset, year)
 
@@ -240,6 +241,15 @@ class CocoDataset(utils.Dataset):
         for annotation in annotations:
             class_id = self.map_source_class_id(
                 "coco.{}".format(annotation['category_id']))
+            if self._active_classes is not None:
+                class_id = self._active_classes[class_id]
+            if self._class_map is not None:
+                new_id = self._class_map[class_id]
+                if new_id == 255:
+                    continue
+            else:
+                new_id = class_id
+
             if class_id:
                 m = self.annToMask(annotation, image_info["height"],
                                    image_info["width"])
@@ -249,14 +259,16 @@ class CocoDataset(utils.Dataset):
                     continue
                 # Is it a crowd? If so, use a negative class ID.
                 if annotation['iscrowd']:
+                    continue
                     # Use negative class ID for crowds
+                    print('crowd')
                     class_id *= -1
                     # For crowd masks, annToMask() sometimes returns a mask
                     # smaller than the given dimensions. If so, resize it.
                     if m.shape[0] != image_info["height"] or m.shape[1] != image_info["width"]:
                         m = np.ones([image_info["height"], image_info["width"]], dtype=bool)
                 instance_masks.append(m)
-                class_ids.append(class_id)
+                class_ids.append(new_id)
 
         # Pack instance masks into an array
         if class_ids:

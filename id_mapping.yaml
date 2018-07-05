@@ -1,0 +1,204 @@
+COCO: {
+0: 255, # BG, unlabeled
+1: 11, # person,
+2: 18, # bicycle,
+3: 13, # car,
+4: 17, # motorcycle,
+5: 255, # airplane, unlabeled
+6: 15, # bus,
+7: 16, # train,
+8: 14, # truck,
+9: 255, # boat, unlabeled
+10: 6, # traffic light,
+11: 255, # fire hydrant, unlabeled
+13: 7, # stop sign, traffic sign
+14: 255, # parking meter, unlabeled
+15: 255, # bench, unlabeled
+16: 255, # bird, unlabeled
+17: 255, # cat, unlabeled
+18: 255, # dog, unlabeled
+19: 255, # horse, unlabeled
+20: 255, # sheep, unlabeled
+21: 255, # cow, unlabeled
+22: 255, # elephant, unlabeled
+23: 255, # bear, unlabeled
+24: 255, # zebra, unlabeled
+25: 255, # giraffe, unlabeled
+27: 255, # backpack, unlabeled
+28: 255, # umbrella, unlabeled
+31: 255, # handbag, unlabeled
+32: 255, # tie, unlabeled
+33: 255, # suitcase, unlabeled
+34: 255, # frisbee, unlabeled
+35: 255, # skis, unlabeled
+36: 255, # snowboard, unlabeled
+37: 255, # sports ball, unlabeled
+38: 255, # kite, unlabeled
+39: 255, # baseball bat, unlabeled
+40: 255, # baseball glove, unlabeled
+41: 255, # skateboard, unlabeled
+42: 255, # surfboard, unlabeled
+43: 255, # tennis racket, unlabeled
+44: 255, # bottle, unlabeled
+46: 255, # wine glass, unlabeled
+47: 255, # cup, unlabeled
+48: 255, # fork, unlabeled
+49: 255, # knife, unlabeled
+50: 255, # spoon, unlabeled
+51: 255, # bowl, unlabeled
+52: 255, # banana, unlabeled
+53: 255, # apple, unlabeled
+54: 255, # sandwich, unlabeled
+55: 255, # orange, unlabeled
+56: 255, # broccoli, unlabeled
+57: 255, # carrot, unlabeled
+58: 255, # hot dog, unlabeled
+59: 255, # pizza, unlabeled
+60: 255, # donut, unlabeled
+61: 255, # cake, unlabeled
+62: 255, # chair, unlabeled
+63: 255, # couch, unlabeled
+64: 255, # potted plant, unlabeled
+65: 255, # bed, unlabeled
+67: 255, # dining table, unlabeled
+70: 255, # toilet, unlabeled
+72: 255, # tv, unlabeled
+73: 255, # laptop, unlabeled
+74: 255, # mouse, unlabeled
+75: 255, # remote, unlabeled
+76: 255, # keyboard, unlabeled
+77: 255, # cell phone, unlabeled
+78: 255, # microwave, unlabeled
+79: 255, # oven, unlabeled
+80: 255, # toaster, unlabeled
+81: 255, # sink, unlabeled
+82: 255, # refrigerator, unlabeled
+84: 255, # book, unlabeled
+85: 255, # clock, unlabeled
+86: 255, # vase, unlabeled
+87: 255, # scissors, unlabeled
+88: 255, # teddy bear, unlabeled
+89: 255, # hair drier, unlabeled
+90: 255, # toothbrush, unlabeled
+}
+
+CITYSCAPE: {
+0: 255, # unlabeled,
+1: 255, # ego vehicle,
+2: 255, # rectification border,
+3: 255, # out of roi,
+4: 255, # static,
+5: 255, # dynamic,
+6: 255, # ground,
+7: 0, # road,
+8: 1, # sidewalk,
+9: 255, # parking,
+10: 255, # rail track,
+11: 2, # building,
+12: 3, # wall,
+13: 4, # fence,
+14: 255, # guard rail,
+15: 255, # bridge,
+16: 255, # tunnel,
+17: 5, # pole,
+18: 255, # polegroup,
+19: 6, # traffic light,
+20: 7, # traffic sign,
+21: 8, # vegetation,
+22: 9, # terrain,
+23: 10, # sky,
+24: 11, # person,
+25: 12, # rider,
+26: 13, # car,
+27: 14, # truck,
+28: 15, # bus,
+29: 255, # caravan,
+30: 255, # trailer,
+31: 16, # train,
+32: 17, # motorcycle,
+33: 18, # bicycle,
+-1: -1, # license plate,
+}
+
+BDD: {
+0: 255, # unlabeled,
+1: 255, # dynamic,
+2: 255, # ego vehicle,
+3: 255, # ground,
+4: 255, # static,
+5: 255, # parking,
+6: 255, # rail track,
+7: 0, # road,
+8: 1, # sidewalk,
+9: 255, # bridge,
+10: 2, # building,
+11: 4, # fence,
+12: 255, # garage,
+13: 255, # guard rail,
+14: 255, # tunnel,
+15: 3, # wall,
+16: 255, # banner,
+17: 255, # billboard,
+18: 255, # lane divider,
+19: 255, # parking sign,
+20: 5, # pole,
+21: 255, # polegroup,
+22: 255, # street light,
+23: 255, # traffic cone,
+24: 255, # traffic device,
+25: 6, # traffic light,
+26: 7, # traffic sign,
+27: 255, # traffic sign frame,
+28: 9, # terrain,
+29: 8, # vegetation,
+30: 10, # sky,
+31: 11, # person,
+32: 12, # rider,
+33: 18, # bicycle,
+34: 15, # bus,
+35: 13, # car,
+36: 255, # caravan,
+37: 17, # motorcycle,
+38: 255, # trailer,
+39: 16, # train,
+40: 14, # truck,
+}
+
+APPOLLO: {
+0: 255, # others,
+1: 255, # rover,
+17: 10, # sky,
+33: 13, # car,
+161: 13, # car_groups,
+34: 17, # motorbicycle,
+162: 17, # motorbicycle_group,
+35: 18, # bicycle,
+163: 18, # bicycle_group,
+36: 11, # person,
+164: 11, # person_group,
+37: 12, # rider,
+165: 12, # rider_group,
+38: 14, # truck,
+166: 14, # truck_group,
+39: 15, # bus,
+167: 15, # bus_group,
+40: 255, # tricycle,
+168: 255, # tricycle_group,
+49: 0, # road,
+50: 1, # siderwalk,
+65: 255, # traffic_cone,
+66: 0, # road_pile,
+67: 4, # fence,
+81: 6, # traffic_light,
+82: 5, # pole,
+83: 7, # traffic_sign,
+84: 3, # wall,
+85: 255, # dustbin,
+86: 255, # billboard,
+97: 2, # building,
+98: 255, # bridge,
+99: 255, # tunnel,
+100: 255, # overpass,
+113: 8, # vegetation,
+255: 255, # unlabeled,
+}
