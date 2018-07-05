@@ -1191,9 +1191,12 @@ def load_image_gt(dataset, config, image_id, augment=False,
     # Active classes
     # Different datasets have different classes, so track the
     # classes supported in the dataset of this image.
-    active_class_ids = np.zeros([dataset.num_classes], dtype=np.int32)
-    source_class_ids = dataset.source_class_ids[dataset.image_info[image_id]["source"]]
-    active_class_ids[source_class_ids] = 1
+    # TODO: CobinedDataset currently does not implement num_classes, source_class_ids, image_info ...
+    # uncomment the following 3 lines and delete the 4'th when done
+    # active_class_ids = np.zeros([dataset.num_classes], dtype=np.int32)
+    # source_class_ids = dataset.source_class_ids[dataset.image_info[image_id]["source"]]
+    # active_class_ids[source_class_ids] = 1
+    active_class_ids = np.ones([config.NUM_CLASSES], dtype=np.int32)
 
     # Resize masks to smaller size to reduce memory usage
     if use_mini_mask:
