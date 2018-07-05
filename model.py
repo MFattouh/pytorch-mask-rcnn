@@ -1178,6 +1178,15 @@ def load_image_gt(dataset, config, image_id, augment=False,
     # if the corresponding mask got cropped out.
     # bbox: [num_instances, (y1, x1, y2, x2)]
     bbox = utils.extract_bboxes(mask)
+    accepted_instances = []
+    for instance_id in range(bbox.shape[0]):
+        if np.all(bbox[instance_id, :] == [0, 0, 0, 0]):
+            accepted_instances.append(False)
+        else:
+            accepted_instances.append(True)
+
+    mask = mask[:, :, accepted_instances]
+    bbox = bbox[accepted_instances, :]
 
     # Active classes
     # Different datasets have different classes, so track the
