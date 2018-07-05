@@ -1561,15 +1561,28 @@ class MaskRCNN(nn.Module):
         checkpoint = os.path.join(dir_name, checkpoints[-1])
         return dir_name, checkpoint
 
-    def load_weights(self, filepath):
+    def load_weights(self, filepath, layers=None):
         """Modified version of the correspoding Keras function with
         the addition of multi-GPU support and the ability to exclude
         some layers from loading.
         exlude: list of layer names to excluce
         """
         if os.path.exists(filepath):
-            state_dict = torch.load(filepath)
-            self.load_state_dict(state_dict, strict=False)
+            pretrained_state = torch.load(filepath)
+            if layers is not None:
+                model_state = self.state_dict()
+                layers = self.parse_layers(layers)
+
+                for name, param in pretrained_state.items():
+                    trainable = bool(re.match(layers, name))
+                    if not trainable:
+                        if isinstance(param, torch.nn.Parameter):
+                            param = param.data
+
+                        model_state[name].copy_(param)
+
+            else:
+                self.load_state_dict(pretrained_state, strict=False)
         else:
             print("Weight file not found ...")
 
@@ -1763,18 +1776,7 @@ class MaskRCNN(nn.Module):
         """
 
         # Pre-defined layer regular expressions
-        layer_regex = {
-            # all layers but the backbone
-            "heads": r"(fpn.P5\_.*)|(fpn.P4\_.*)|(fpn.P3\_.*)|(fpn.P2\_.*)|(rpn.*)|(classifier.*)|(mask.*)",
-            # From a specific Resnet stage and up
-            "3+": r"(fpn.C3.*)|(fpn.C4.*)|(fpn.C5.*)|(fpn.P5\_.*)|(fpn.P4\_.*)|(fpn.P3\_.*)|(fpn.P2\_.*)|(rpn.*)|(classifier.*)|(mask.*)",
-            "4+": r"(fpn.C4.*)|(fpn.C5.*)|(fpn.P5\_.*)|(fpn.P4\_.*)|(fpn.P3\_.*)|(fpn.P2\_.*)|(rpn.*)|(classifier.*)|(mask.*)",
-            "5+": r"(fpn.C5.*)|(fpn.P5\_.*)|(fpn.P4\_.*)|(fpn.P3\_.*)|(fpn.P2\_.*)|(rpn.*)|(classifier.*)|(mask.*)",
-            # All layers
-            "all": ".*",
-        }
-        if layers in layer_regex.keys():
-            layers = layer_regex[layers]
+        layers = self.parse_layers(layers)
 
         # Data generators
         train_set = Dataset(train_dataset, self.config, augment=True)
@@ -1816,7 +1818,20 @@ class MaskRCNN(nn.Module):
 
         self.epoch = epochs
 
-
+    def parse_layers(self, layers):
+        layer_regex = {
+            # all layers but the backbone
+            "heads": r"(fpn.P5\_.*)|(fpn.P4\_.*)|(fpn.P3\_.*)|(fpn.P2\_.*)|(rpn.*)|(classifier.*)|(mask.*)",
+            # From a specific Resnet stage and up
+            "3+": r"(fpn.C3.*)|(fpn.C4.*)|(fpn.C5.*)|(fpn.P5\_.*)|(fpn.P4\_.*)|(fpn.P3\_.*)|(fpn.P2\_.*)|(rpn.*)|(classifier.*)|(mask.*)",
+            "4+": r"(fpn.C4.*)|(fpn.C5.*)|(fpn.P5\_.*)|(fpn.P4\_.*)|(fpn.P3\_.*)|(fpn.P2\_.*)|(rpn.*)|(classifier.*)|(mask.*)",
+            "5+": r"(fpn.C5.*)|(fpn.P5\_.*)|(fpn.P4\_.*)|(fpn.P3\_.*)|(fpn.P2\_.*)|(rpn.*)|(classifier.*)|(mask.*)",
+            # All layers
+            "all": ".*",
+        }
+        if layers in layer_regex.keys():
+            layers = layer_regex[layers]
+        return layers
 
     def train_epoch(self, datagenerator, optimizer, steps):
         batch_count = 0
